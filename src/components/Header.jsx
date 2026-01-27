@@ -9,7 +9,7 @@ function Header({ darkMode, setDarkMode }) {
   const sections = [
     { name: "Accueil", id: "home" },
     { name: "À propos", id: "propos" },
-    { name: "Projet", id: "projet" },
+    { name: "Service", id: "service" },
     { name: "Langage", id: "langage" },
     { name: "Contact", id: "contact" },
   ];
