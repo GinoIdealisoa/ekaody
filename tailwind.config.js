@@ -2,8 +2,9 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx}"
+    "./src/**/*.{js,ts,jsx,tsx}",   // ⚠️ très important
   ],
+  darkMode: "class",
   theme: {
     extend: {},
   },
