@@ -47,19 +47,17 @@ export default function Contact() {
 
     // Affichage "envoi en cours"
     Swal.fire({
-      title: "Envoi en cours...",
-      html: `
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden"></span>
-          </div>
-        </div>
-        <p>Merci de patienter, votre message est en cours d'envoi...</p>
-      `,
-      showCloseButton: false,
-      showConfirmButton: false,
-      allowOutsideClick: false,
-    });
+  title: "Envoi en cours...",
+  html: `
+    <div class="flex flex-col items-center justify-center gap-4">
+      <div class="w-12 h-12 border-4 border-t-sky-500 border-b-sky-500 border-gray-200 rounded-full animate-spin"></div>
+      <p>Merci de patienter, votre message est en cours d'envoi...</p>
+    </div>
+  `,
+  showConfirmButton: false,
+  allowOutsideClick: false,
+});
+
 
     try {
       const templateParams = { nom, email, numero, message };
@@ -72,11 +70,25 @@ export default function Contact() {
       );
 
       Swal.fire({
-        icon: "success",
-        title: "Merci pour votre message !",
-        text: "Votre message a été envoyé avec succès.",
-        confirmButtonText: "Ok",
-      });
+  icon: "success",
+  title: `Merci ${nom} pour votre message !`,
+  html: `<p class="has-text-weight-bold">Votre message a été envoyé avec succès chez E-KAODY.</p>`,
+  showConfirmButton: true, // pas de bouton
+  background: 'transparent',
+  willOpen: () => {
+    const popup = Swal.getPopup();
+    popup.style.border = "2px solid #095579"; // text-sky-400
+    popup.style.color = "#ffffff";           // texte bleu ciel
+    // après 3 secondes, on supprime le style
+    setTimeout(() => {
+      popup.style.border = "none";
+      popup.style.color = "";
+      Swal.close(); // ferme automatiquement la popup
+    }, 3000);
+  }
+});
+
+
 
       // Réinitialisation du formulaire
       setFormData({
