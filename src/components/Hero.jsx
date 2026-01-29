@@ -1,10 +1,11 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import { FiArrowDown } from "react-icons/fi";
 import { BsSearch } from "react-icons/bs";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
   const canvasRef = useRef(null);
+  const [animatedText, setAnimatedText] = useState([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -46,7 +47,6 @@ export default function Hero() {
         ctx.fillStyle = `rgba(2, 132, 199, ${this.opacity})`;
         ctx.fill();
 
-        // Halo lumineux
         const gradient = ctx.createRadialGradient(
           this.x, this.y, 0,
           this.x, this.y, this.radius * 8
@@ -62,7 +62,6 @@ export default function Hero() {
 
     const particles = Array.from({ length: 80 }, () => new Particle());
 
-    // Ondes énergétiques
     const waves = [];
     const createWave = () => {
       waves.push({
@@ -75,14 +74,12 @@ export default function Hero() {
       });
     };
 
-    // Créer des ondes périodiquement
     setInterval(createWave, 2000);
 
     const animate = () => {
       time += 0.02;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Fond avec dégradé animé
       const bgGradient = ctx.createRadialGradient(
         canvas.width / 2 + Math.sin(time) * 100,
         canvas.height / 2 + Math.cos(time) * 100,
@@ -96,7 +93,6 @@ export default function Hero() {
       ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Dessiner et mettre à jour les ondes
       waves.forEach((wave, index) => {
         wave.radius += wave.speed;
         wave.opacity -= 0.003;
@@ -112,7 +108,6 @@ export default function Hero() {
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Onde intérieure
         ctx.beginPath();
         ctx.arc(wave.x, wave.y, wave.radius * 0.7, 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(14, 165, 233, ${wave.opacity * 0.5})`;
@@ -120,13 +115,11 @@ export default function Hero() {
         ctx.stroke();
       });
 
-      // Mettre à jour et dessiner les particules
       particles.forEach((particle) => {
         particle.update();
         particle.draw();
       });
 
-      // Connecter les particules proches
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -145,7 +138,6 @@ export default function Hero() {
         }
       }
 
-      // Lignes énergétiques traversantes
       if (Math.random() > 0.97) {
         const startX = Math.random() < 0.5 ? 0 : canvas.width;
         const startY = Math.random() * canvas.height;
@@ -169,7 +161,6 @@ export default function Hero() {
         ctx.shadowBlur = 0;
       }
 
-      // Cercles pulsants aux coins
       const corners = [
         { x: 50, y: 50 },
         { x: canvas.width - 50, y: 50 },
@@ -197,6 +188,24 @@ export default function Hero() {
     };
   }, []);
 
+  // Animation du texte LED
+  useEffect(() => {
+    const text = "Votre site doit donner envie de rester, pas de revenir en arrière.";
+    const words = text.split(" ");
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      if (currentIndex <= words.length) {
+        setAnimatedText(words.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToApropos = () => {
     const element = document.getElementById("propos");
     if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -207,7 +216,6 @@ export default function Hero() {
       id="home"
       className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0b0b0b] text-black dark:text-white relative overflow-hidden transition-colors duration-500"
     >
-      {/* Canvas animé en arrière-plan */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
@@ -222,10 +230,32 @@ export default function Hero() {
           CRÉER UN SITE WEB <span className="font-extrabold">VRAIMENT UNIQUE</span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg">
-          Votre <span className="text-sky-600 animate-pulse">site</span> doit donner envie <br />
-          de <span className="text-sky-600">rester</span>, pas de{" "}
-          <span className="line-through decoration-sky-600 decoration-4">revenir en arrière</span>.
+        {/* Titre avec effet LED */}
+        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg min-h-[200px] flex items-center justify-center">
+          <span className="inline-block">
+            {animatedText.map((word, index) => {
+              const isHighlighted = word === "site" || word === "rester," || word === "envie";
+              const isStrikethrough = word === "arrière.";
+              
+              return (
+                <span
+                  key={index}
+                  className={`inline-block mx-1 animate-ledGlow ${
+                    isHighlighted ? "text-sky-600" : ""
+                  } ${isStrikethrough ? "line-through decoration-sky-600 decoration-4" : ""}`}
+                  style={{
+                    animation: `ledGlow 0.5s ease-in-out ${index * 0.1}s both, ledFlicker 2s infinite ${index * 0.3}s`,
+                    textShadow: isHighlighted
+                      ? "0 0 10px rgba(2, 132, 199, 0.8), 0 0 20px rgba(2, 132, 199, 0.6), 0 0 30px rgba(2, 132, 199, 0.4)"
+                      : "0 0 10px rgba(2, 132, 199, 0.3)",
+                  }}
+                >
+                  {word}
+                </span>
+              );
+            })}
+            <span className="inline-block w-1 h-12 md:h-16 bg-sky-600 ml-2 animate-blink"></span>
+          </span>
         </h1>
 
         <p className="text-gray-700 dark:text-gray-300 mt-6 text-lg max-w-2xl mx-auto drop-shadow">
@@ -250,6 +280,50 @@ export default function Hero() {
           </button>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes ledGlow {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 0.5;
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes ledFlicker {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.95;
+          }
+          75% {
+            opacity: 1;
+          }
+          80% {
+            opacity: 0.98;
+          }
+        }
+
+        @keyframes blink {
+          0%, 49% {
+            opacity: 1;
+          }
+          50%, 100% {
+            opacity: 0;
+          }
+        }
+
+        .animate-blink {
+          animation: blink 1s infinite;
+        }
+      `}</style>
     </section>
   );
 }
