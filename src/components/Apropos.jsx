@@ -1,73 +1,182 @@
+// Apropos.tsx
 import React from 'react';
+import { motion } from 'framer-motion';
+
+// ── Variantes d’animation ────────────────────────────────────────
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.16, delayChildren: 0.25 },
+  },
+};
+
+const titleVariants = {
+  hidden: { opacity: 0, y: 55 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 85, damping: 14 } },
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 40, filter: 'blur(5px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 75, damping: 18, duration: 1.3 },
+  },
+};
+
+const revealContainerVariants = {
+  hidden: { opacity: 0.4, scale: 0.94 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 1.4, ease: 'easeOut' },
+  },
+};
+
+const splashVariants = {
+  initial: { scale: 1.1, opacity: 0.6 },
+  animate: {
+    scale: [1.1, 1.25, 1.1],
+    opacity: [0.6, 0.85, 0.6],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      repeatType: 'reverse',
+      ease: 'easeInOut',
+    },
+  },
+};
+
+const imageRevealVariants = {
+  rest: { clipPath: 'ellipse(0% 0% at 30% 40%)' },
+  hover: {
+    clipPath: 'ellipse(140% 180% at 35% 25%)',
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 export default function Apropos() {
   return (
     <section
       id="propos"
-      className="min-h-screen flex items-center justify-center 
-      bg-white dark:bg-[#0b0b0b] 
-      text-black dark:text-white 
-      px-6 py-24 transition-colors duration-500 
-      relative overflow-hidden"
+      className={`
+        relative min-h-screen flex items-center justify-center
+        bg-white dark:bg-[#0a0a0a]
+        text-black dark:text-white
+        px-5 sm:px-8 lg:px-14 xl:px-20
+        py-16 md:py-24 lg:py-32
+        overflow-hidden
+        transition-colors duration-700
+      `}
     >
-      {/* Splash background effect */}
-      <div className="absolute inset-0 
-        bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_60%)]
-        dark:bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.12),transparent_60%)]
-        pointer-events-none">
-      </div>
+      {/* Fond splash large qui coule vers le bas */}
+      <div
+        className={`
+          absolute inset-0 pointer-events-none z-0
+          bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.16)_0%,transparent_50%)]
+          dark:bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.10)_0%,transparent_50%)]
+        `}
+      />
+      <div
+        className={`
+          absolute inset-0 pointer-events-none z-0
+          bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.13)_0%,transparent_65%)]
+          dark:bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.08)_0%,transparent_65%)]
+          translate-y-[10%] sm:translate-y-[18%]
+        `}
+      />
 
-      <div className="relative z-10 max-w-6xl w-full 
-        grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <motion.div
+        className="relative z-10 max-w-7xl w-full mx-auto"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-start">
 
-        {/* Texte */}
-        <div>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-            À propos de <span className="text-sky-600 dark:text-sky-400">E-KAODY</span>
-          </h2>
+          {/* ── Texte ──────────────────────────────────────────────── */}
+          <div className="space-y-7 md:space-y-9 lg:pt-10 xl:pt-14">
+            <motion.h2
+              variants={titleVariants}
+              className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
+            >
+              À propos de{' '}
+              <span className="bg-gradient-to-r from-sky-500 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                E-KAODY
+              </span>
+            </motion.h2>
 
-          <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-5">
-            Chez <span className="font-semibold">E-KAODY</span>, nous croyons que 
-            chaque entreprise mérite une présence digitale forte, moderne et performante. 
-            Notre mission est de concevoir des sites web qui ne se contentent pas 
-            d’être beaux, mais qui captivent, engagent et convertissent vos visiteurs.
-          </p>
+            <motion.p variants={textVariants} className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300/90">
+              Chez <span className="font-semibold text-sky-600 dark:text-sky-400">E-KAODY</span>, nous transformons les idées en expériences digitales percutantes.
+            </motion.p>
 
-          <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-5">
-            De la création graphique à l’optimisation SEO, en passant par 
-            le développement sur mesure, nous accompagnons nos clients 
-            à chaque étape pour transformer leurs idées en solutions digitales efficaces.
-          </p>
+            <motion.p variants={textVariants} className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300/90">
+              Design moderne, développement sur mesure, performance optimisée, SEO puissant — nous couvrons tout le spectre pour que votre présence en ligne ne soit pas seulement visible, mais inoubliable.
+            </motion.p>
 
-          <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-            Avec une approche centrée sur l’innovation et la performance, 
-            <span className="font-semibold text-sky-600 dark:text-sky-400">
-              E-KAODY
-            </span>{" "}
-            s’engage à propulser votre marque vers le succès en ligne.
-          </p>
-        </div>
+            <motion.p variants={textVariants} className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300/90">
+              Notre obsession ? Créer des sites qui convertissent vraiment.
+            </motion.p>
 
-        {/* Image + Splash effect */}
-        <div className="relative flex justify-center">
-          
-          {/* Glow derrière l'image */}
-          <div className="absolute -inset-4 
-            bg-[radial-gradient(circle,rgba(56,189,248,0.35),transparent_70%)]
-            blur-2xl">
+            <motion.p
+              variants={textVariants}
+              className="text-lg md:text-xl font-medium text-sky-600 dark:text-sky-300 pt-4"
+            >
+              E-KAODY — Votre croissance digitale commence ici.
+            </motion.p>
           </div>
 
-          <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-            alt="E-KAODY digital agency"
-            className="relative w-full max-w-md rounded-2xl 
-            shadow-2xl border border-sky-500/30 
-            hover:scale-105 transition-transform duration-500"
-          />
-        </div>
+          {/* ── Image avec effet reveal splash ─────────────────────── */}
+          <div className="relative flex justify-center lg:justify-end mt-12 lg:mt-0 group">
+            {/* Splash animé (glow qui pulse) */}
+            <motion.div
+              className={`
+                absolute -inset-12 sm:-inset-16 lg:-inset-20
+                bg-gradient-to-br from-sky-400/45 via-cyan-300/30 to-blue-500/10
+                dark:from-sky-600/30 dark:via-cyan-500/20 dark:to-blue-700/10
+                rounded-full blur-3xl lg:blur-4xl
+                opacity-70 group-hover:opacity-90
+                pointer-events-none
+              `}
+              variants={splashVariants}
+              initial="initial"
+              animate="animate"
+            />
 
-      </div>
+            {/* Conteneur de reveal */}
+            <motion.div
+              className="relative w-full max-w-md lg:max-w-xl overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl shadow-sky-950/25 dark:shadow-black/60 border border-sky-400/20 dark:border-sky-600/15"
+              variants={revealContainerVariants}
+              whileHover="hover"
+            >
+              {/* Image de fond (visible par défaut) */}
+              <img
+                src="https://images.pexels.com/photos/7688335/pexels-photo-7688335.jpeg"
+                alt="Équipe E-KAODY en réunion créative"
+                className="w-full h-full object-cover opacity-90 group-hover:opacity-40 transition-opacity duration-700"
+              />
+
+              {/* Image révélée à l’intérieur du splash */}
+              <motion.div
+                className="absolute inset-0"
+                variants={imageRevealVariants}
+                initial="rest"
+                whileHover="hover"
+              >
+                <img
+                  src="https://images.pexels.com/photos/7163395/pexels-photo-7163395.jpeg"
+                  alt="E-KAODY — Collaboration digitale moderne"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+
+        </div>
+      </motion.div>
     </section>
   );
 }
-
