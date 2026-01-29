@@ -151,13 +151,113 @@ export default function Contact() {
 
       {/* Formulaire Contact */}
       <form className="flex-1 max-w-md flex flex-col gap-5 relative z-10">
-        <input type="text" placeholder="Votre nom" className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition"/>
-        <input type="email" placeholder="Votre email" className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition"/>
-        <input type="text" placeholder="Sujet" className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition"/>
-        <textarea placeholder="Votre message" rows="5" className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 transition resize-none"/>
-        <button type="submit" className="mt-2 px-6 py-3 border border-sky-600 dark:border-sky-400 text-sky-600 dark:text-sky-400 font-semibold rounded-xl hover:bg-sky-600 hover:text-white dark:hover:bg-sky-400 dark:hover:text-black transition-all duration-300">
-          Envoyer
-        </button>
+           <div className="relative z-0 w-full group">
+          <input
+            type="text"
+            id="floating_nom"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white 
+            bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-600 
+            appearance-none focus:outline-none focus:ring-0 focus:border-sky-500 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            htmlFor="floating_nom"
+            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
+            -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+            peer-focus:text-sky-600 peer-focus:dark:text-sky-400
+            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+            peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Votre nom
+          </label>
+        </div>
+
+        {/* Email */}
+        <div className="relative z-0 w-full group">
+          <input
+            type="email"
+            id="floating_email"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white 
+            bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-600 
+            appearance-none focus:outline-none focus:ring-0 focus:border-sky-500 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            htmlFor="floating_email"
+            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
+            -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+            peer-focus:text-sky-600 peer-focus:dark:text-sky-400
+            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+            peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Votre email
+          </label>
+        </div>
+
+        {/* Sujet */}
+        <div className="relative z-0 w-full group">
+          <input
+            type="text"
+            id="floating_sujet"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white 
+            bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-600 
+            appearance-none focus:outline-none focus:ring-0 focus:border-sky-500 peer"
+            placeholder=" "
+            required
+          />
+          <label
+            htmlFor="floating_sujet"
+            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
+            -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+            peer-focus:text-sky-600 peer-focus:dark:text-sky-400
+            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+            peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Sujet
+          </label>
+        </div>
+
+        {/* Message */}
+        <div className="relative z-0 w-full group">
+          <textarea
+            id="floating_message"
+            rows="4"
+            className="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white 
+            bg-transparent border-0 border-b-2 border-gray-300 dark:border-gray-600 
+            appearance-none focus:outline-none focus:ring-0 focus:border-sky-500 peer resize-none"
+            placeholder=" "
+            required
+          ></textarea>
+          <label
+            htmlFor="floating_message"
+            className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
+            -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+            peer-focus:text-sky-600 peer-focus:dark:text-sky-400
+            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+            peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Votre message
+          </label>
+        </div>
+
+        {/* Bouton */}
+                <button
+  type="submit"
+  className="relative inline-flex items-center justify-center 
+  px-6 py-3 text-sm font-semibold rounded-xl 
+  border-2 border-sky-500 text-sky-600 
+  dark:border-sky-400 dark:text-sky-400
+  hover:bg-sky-500 hover:text-white 
+  dark:hover:bg-sky-400 dark:hover:text-black
+  transition duration-300 ease-in-out
+  focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-800
+  focus:outline-none"
+>
+  Envoyer
+</button>
+
       </form>
     </section>
   );
