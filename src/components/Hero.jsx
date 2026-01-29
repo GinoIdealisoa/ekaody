@@ -22,7 +22,6 @@ export default function Hero() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Particules connectées
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -230,7 +229,6 @@ export default function Hero() {
           CRÉER UN SITE WEB <span className="font-extrabold">VRAIMENT UNIQUE</span>
         </div>
 
-        {/* Titre avec effet LED */}
         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg min-h-[200px] flex items-center justify-center">
           <span className="inline-block">
             {animatedText.map((word, index) => {

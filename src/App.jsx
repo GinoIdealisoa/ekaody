@@ -8,6 +8,7 @@ import Service from "./components/Service";
 import Langage from "./components/Langage";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import CursorTrail from "./components/CursorTrail";
 
 export default function App() {
   const [selectedTab, setSelectedTab] = useState("home");
@@ -22,7 +23,13 @@ export default function App() {
   };
 
   return (
-    <div className={`${darkMode ? "dark" : ""} transition-colors duration-500`}>
+    <div 
+      className={`${darkMode ? "dark" : ""} transition-colors duration-500`}
+      style={{ cursor: "none" }}
+    >
+      {/* Curseur personnalisé global */}
+      <CursorTrail />
+
       <Header
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
