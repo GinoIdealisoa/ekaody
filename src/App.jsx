@@ -30,7 +30,7 @@ export default function App() {
         setDarkMode={setDarkMode}
       />
 
-      <main className="pt-24">
+      <main className="pt-18">
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedTab}
