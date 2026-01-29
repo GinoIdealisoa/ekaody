@@ -1,8 +1,7 @@
-// Apropos.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// ── Variantes d’animation ────────────────────────────────────────
+// ── Variantes d’animation ──────────────────────────────
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -57,6 +56,13 @@ const imageRevealVariants = {
   },
 };
 
+// ── Style Keyframes Box ──
+const boxStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: 10,
+};
+
 export default function Apropos() {
   return (
     <section
@@ -71,22 +77,9 @@ export default function Apropos() {
         transition-colors duration-700
       `}
     >
-      {/* Fond splash large qui coule vers le bas */}
-      <div
-        className={`
-          absolute inset-0 pointer-events-none z-0
-          bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.16)_0%,transparent_50%)]
-          dark:bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.10)_0%,transparent_50%)]
-        `}
-      />
-      <div
-        className={`
-          absolute inset-0 pointer-events-none z-0
-          bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.13)_0%,transparent_65%)]
-          dark:bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.08)_0%,transparent_65%)]
-          translate-y-[10%] sm:translate-y-[18%]
-        `}
-      />
+      {/* Fond radial */}
+      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.16)_0%,transparent_50%)] dark:bg-[radial-gradient(ellipse_at_25%_10%,rgba(14,165,233,0.10)_0%,transparent_50%)]"/>
+      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.13)_0%,transparent_65%)] dark:bg-[radial-gradient(ellipse_at_40%_-20%,rgba(59,130,246,0.08)_0%,transparent_65%)] translate-y-[10%] sm:translate-y-[18%]"/>
 
       <motion.div
         className="relative z-10 max-w-7xl w-full mx-auto"
@@ -97,12 +90,9 @@ export default function Apropos() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-start">
 
-          {/* ── Texte ──────────────────────────────────────────────── */}
+          {/* ── Texte ── */}
           <div className="space-y-7 md:space-y-9 lg:pt-10 xl:pt-14">
-            <motion.h2
-              variants={titleVariants}
-              className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
+            <motion.h2 variants={titleVariants} className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
               À propos de{' '}
               <span className="bg-gradient-to-r from-sky-500 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
                 E-KAODY
@@ -121,51 +111,48 @@ export default function Apropos() {
               Notre obsession ? Créer des sites qui convertissent vraiment.
             </motion.p>
 
-            <motion.p
-              variants={textVariants}
-              className="text-lg md:text-xl font-medium text-sky-600 dark:text-sky-300 pt-4"
-            >
+            <motion.p variants={textVariants} className="text-lg md:text-xl font-medium text-sky-600 dark:text-sky-300 pt-4">
               E-KAODY — Votre croissance digitale commence ici.
             </motion.p>
           </div>
 
-          {/* ── Image avec effet reveal splash ─────────────────────── */}
+          {/* ── Image avec Keyframes + Reveal ── */}
           <div className="relative flex justify-center lg:justify-end mt-12 lg:mt-0 group">
-            {/* Splash animé (glow qui pulse) */}
+            
+            {/* Splash pulsant */}
             <motion.div
-              className={`
-                absolute -inset-12 sm:-inset-16 lg:-inset-20
-                bg-gradient-to-br from-sky-400/45 via-cyan-300/30 to-blue-500/10
-                dark:from-sky-600/30 dark:via-cyan-500/20 dark:to-blue-700/10
-                rounded-full blur-3xl lg:blur-4xl
-                opacity-70 group-hover:opacity-90
-                pointer-events-none
-              `}
+              className="absolute -inset-12 sm:-inset-16 lg:-inset-20 bg-gradient-to-br from-sky-400/45 via-cyan-300/30 to-blue-500/10 dark:from-sky-600/30 dark:via-cyan-500/20 dark:to-blue-700/10 rounded-full blur-3xl lg:blur-4xl opacity-70 pointer-events-none"
               variants={splashVariants}
               initial="initial"
               animate="animate"
             />
 
-            {/* Conteneur de reveal */}
+            {/* Conteneur image + Keyframes */}
             <motion.div
+              style={boxStyle}
+              animate={{
+                scale: [1, 1.2, 1.2, 1, 1],
+                rotate: [0, 0, 10, -10, 0],
+                borderRadius: ["10%", "15%", "50%", "15%", "10%"],
+              }}
+              transition={{
+                duration: 6,
+                ease: "easeInOut",
+                times: [0, 0.2, 0.5, 0.8, 1],
+                repeat: Infinity,
+                repeatDelay: 1,
+              }}
               className="relative w-full max-w-md lg:max-w-xl overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl shadow-sky-950/25 dark:shadow-black/60 border border-sky-400/20 dark:border-sky-600/15"
-              variants={revealContainerVariants}
-              whileHover="hover"
             >
-              {/* Image de fond (visible par défaut) */}
+              {/* Image principale */}
               <img
                 src="https://images.pexels.com/photos/7688335/pexels-photo-7688335.jpeg"
-                alt="Équipe E-KAODY en réunion créative"
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-40 transition-opacity duration-700"
+                alt="Équipe E-KAODY"
+                className="w-full h-full object-cover"
               />
 
-              {/* Image révélée à l’intérieur du splash */}
-              <motion.div
-                className="absolute inset-0"
-                variants={imageRevealVariants}
-                initial="rest"
-                whileHover="hover"
-              >
+              {/* Image révélée */}
+              <motion.div className="absolute inset-0" variants={imageRevealVariants} initial="rest" whileHover="hover">
                 <img
                   src="https://images.pexels.com/photos/7163395/pexels-photo-7163395.jpeg"
                   alt="E-KAODY — Collaboration digitale moderne"

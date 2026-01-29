@@ -5,7 +5,7 @@ export default function Contact() {
     <section
       id="contact"
       className="min-h-screen flex flex-col md:flex-row items-center justify-center
-      bg-white dark:bg-[#0b0b0b] text-black dark:text-white px-6 py-24 gap-12 transition-colors duration-500 relative overflow-hidden"
+      bg-white dark:bg-[#0b0b0b] text-black dark:text-white px-6 py-20 gap-12 transition-colors duration-500 relative overflow-hidden"
     >
       {/* Infos Contact */}
       <div className="flex-1 max-w-md">
