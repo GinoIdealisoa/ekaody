@@ -1,27 +1,48 @@
 import { useState } from "react";
-import Header from "./components/Header.jsx";
-import Hero from "./components/Hero.jsx";
-import Apropos from "./components/Apropos.jsx";
-import Service from "./components/Service.jsx";
-import Langage from "./components/Langage.jsx";
-import Contact from "./components/Contact.jsx";
-import Footer from "./components/Footer.jsx";
+import { AnimatePresence, motion } from "framer-motion";
+
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Apropos from "./components/Apropos";
+import Service from "./components/Service";
+import Langage from "./components/Langage";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+
 export default function App() {
+  const [selectedTab, setSelectedTab] = useState("home");
   const [darkMode, setDarkMode] = useState(false);
+
+  const pages = {
+    home: <Hero />,
+    propos: <Apropos />,
+    service: <Service />,
+    langage: <Langage />,
+    contact: <Contact />,
+  };
 
   return (
     <div className={`${darkMode ? "dark" : ""} transition-colors duration-500`}>
-      {/* Header sticky */}
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Header
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
-      {/* Main content avec padding-top pour Header */}
-      <main className="pt-24 bg-white dark:bg-[#0b0b0b] transition-colors duration-500">
-        <Hero />
-        <Apropos />
-        <Service />
-        <Langage />
-        <Contact />
-        <Footer />
+      <main className="pt-24">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedTab}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            {pages[selectedTab]}
+            <Footer />
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );
