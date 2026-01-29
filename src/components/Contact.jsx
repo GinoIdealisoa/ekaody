@@ -6,7 +6,7 @@ import emailjs from "@emailjs/browser";
 export default function Contact() {
   const canvasRef = useRef(null);
 
-  // State pour le formulaire
+  // --- State du formulaire ---
   const [formData, setFormData] = useState({
     nom: "",
     email: "",
@@ -14,19 +14,27 @@ export default function Contact() {
     message: "",
   });
 
+  // --- Gestion des changements dans le formulaire ---
   const handleChange = (e) => {
     const { id, value } = e.target;
+
+    // Si c'est le champ numéro, autorise uniquement les chiffres
+    if (id === "floating_numero") {
+      if (!/^\d*$/.test(value)) return; // ignore tout ce qui n'est pas un chiffre
+    }
+
     setFormData((prev) => ({
       ...prev,
       [id.replace("floating_", "")]: value,
     }));
   };
 
+  // --- Gestion de l'envoi ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { nom, email, numero, message } = formData;
 
-    // Vérification des champs
+    // Vérification des champs obligatoires
     if (!nom || !email || !message) {
       Swal.fire({
         icon: "error",
@@ -37,7 +45,7 @@ export default function Contact() {
       return;
     }
 
-    // Envoi en cours
+    // Affichage "envoi en cours"
     Swal.fire({
       title: "Envoi en cours...",
       html: `
@@ -57,10 +65,10 @@ export default function Contact() {
       const templateParams = { nom, email, numero, message };
 
       await emailjs.send(
-        "service_i6sgc4p",      // Service ID
-        "template_sffs8fe",     // Template ID
-        templateParams,         
-        "Js9tw785Pe0ZfdA5U"    // Public Key (remplace par ta clé)
+        "service_i6sgc4p",      // ton Service ID
+        "template_sffs8fe",     // ton Template ID
+        templateParams,
+        "Js9tw785Pe0ZfdA5U"    // <-- Remplace par ta clé publique EmailJS
       );
 
       Swal.fire({
@@ -88,7 +96,7 @@ export default function Contact() {
     }
   };
 
-  // --- Canvas inchangé ---
+  // --- Canvas du fond animé (inchangé) ---
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -221,7 +229,7 @@ export default function Contact() {
     };
   }, []);
 
-  // --- Formulaire & design inchangés ---
+  // --- Formulaire JSX (inchangé visuellement) ---
   return (
     <section className="relative min-h-screen flex flex-col md:flex-row items-center justify-center px-6 py-20 gap-12 overflow-hidden bg-white dark:bg-[#0b0b0b] text-black dark:text-white">
       <canvas
@@ -294,7 +302,8 @@ export default function Contact() {
         {/* Numéro */}
         <div className="relative z-0 w-full group">
           <input
-            type="text"
+            type="number"  // <- accepte uniquement les nombres
+            min="0"
             id="floating_numero"
             value={formData.numero}
             onChange={handleChange}
