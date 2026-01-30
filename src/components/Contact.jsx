@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
-
+import bean from "../assets/bean.gif";
 export default function Contact() {
   const canvasRef = useRef(null);
 
@@ -70,25 +70,30 @@ export default function Contact() {
       );
 
       Swal.fire({
-  icon: "success",
   title: `Merci ${nom} pour votre message !`,
-  html: `<p class="has-text-weight-bold">Votre message a été envoyé avec succès chez E-KAODY.</p>`,
-  showConfirmButton: true, // pas de bouton
+  html: `<p class="has-text-weight-bold">
+          Votre message a été envoyé avec succès chez E-KAODY.
+        </p>`,
+  imageUrl: bean, // ou '/assets/bean.gif'
+  imageWidth: 120,
+  imageHeight: 120,
+  showConfirmButton: false,
   background: 'transparent',
+  customClass: {
+    image: 'swal-round-image'
+  },
   willOpen: () => {
     const popup = Swal.getPopup();
-    popup.style.border = "2px solid #095579"; // text-sky-400
-    popup.style.color = "#ffffff";           // texte bleu ciel
-    // après 3 secondes, on supprime le style
+    popup.style.border = "2px solid #095579";
+    popup.style.color = "#ffffff";
+
     setTimeout(() => {
       popup.style.border = "none";
       popup.style.color = "";
-      Swal.close(); // ferme automatiquement la popup
+      Swal.close();
     }, 3000);
   }
 });
-
-
 
       // Réinitialisation du formulaire
       setFormData({

@@ -21,3 +21,9 @@ html {
   border-radius: 10px;
   box-shadow: none !important;
 }
+.swal-round-image {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
+}
