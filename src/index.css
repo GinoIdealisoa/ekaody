@@ -27,3 +27,10 @@ html {
   border: 3px solid #38bdf8;
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
 }
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+}

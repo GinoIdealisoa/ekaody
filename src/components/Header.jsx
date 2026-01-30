@@ -24,17 +24,17 @@ function Header({ selectedTab, setSelectedTab, darkMode, setDarkMode }) {
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-sky-500 to-sky-700 flex items-center justify-center text-white font-bold mr-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-sky-500 to-sky-700 flex items-center justify-center text-white font-bold mr-3 font-poppins">
             E-K
           </div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-sky-400">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-sky-400 font-poppins">
             E-KAODY
           </h1>
         </div>
 
-        {/* Desktop Tabs - menu centré */}
+        {/* Desktop Tabs */}
         <div className="hidden md:flex flex-1 justify-center relative">
-          <nav className="flex space-x-8 text-gray-900 dark:text-gray-200 text-lg relative">
+          <nav className="flex space-x-8 text-gray-900 dark:text-gray-200 text-lg font-sans relative">
             {sections.map((section) => (
               <button
                 key={section.id}
@@ -57,7 +57,7 @@ function Header({ selectedTab, setSelectedTab, darkMode, setDarkMode }) {
             ))}
           </nav>
 
-          {/* Dark mode bouton à droite */}
+          {/* Dark mode bouton */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="absolute right-0 p-2 rounded-full bg-white/10 dark:bg-gray-700/20 text-xl"
@@ -85,7 +85,7 @@ function Header({ selectedTab, setSelectedTab, darkMode, setDarkMode }) {
             transition={{ duration: 0.3 }}
             className="md:hidden overflow-hidden bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg"
           >
-            <ul className="flex flex-col items-center py-6 space-y-6 text-gray-900 dark:text-gray-200 text-xl">
+            <ul className="flex flex-col items-center py-6 space-y-6 text-gray-900 dark:text-gray-200 text-xl font-sans">
               {sections.map((section) => (
                 <li key={section.id}>
                   <button
